@@ -5,10 +5,31 @@
 " Last change:	2011-07-28 Thu 03:22 PM
 "
 "
-
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
+
+set backspace=indent,eol,start
+
+" vundle setting
+" rebuilt by `./install.sh --clang-completer`
+filetype off
+
+set runtimepath+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+"
+"" original repos on github
+Bundle 'Valloric/YouCompleteMe'
+
+filetype plugin indent on
+
+" pathogen setting
+execute pathogen#infect()
 
 " Set color scheme that I like.
 " colorscheme evening
@@ -33,10 +54,10 @@ set undofile
 set undodir=$VIMFILES/\_undodir
 set undolevels=1000 "maximum number of changes that can be undone
 
+set background=dark
+
 " Enable syntax highlighting
 syntax on
-
-filetype plugin indent on
 
 " Automatically indent when adding a curly bracket, etc.
 " All indent options: autoindent smartindent cindent
@@ -86,6 +107,9 @@ autocmd BufReadPost *
 " To insert timestamp, press F3.
 nmap <F3> a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
 imap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
+
+nmap <F4> :NERDTree<CR>
+imap <F4> <Esc>:NERDTree<CR>
 
 " Search as you type
 set incsearch
