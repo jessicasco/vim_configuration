@@ -41,8 +41,11 @@ execute pathogen#infect()
 " Set maximum width of text that is being inserted.
 " set textwidth=78
 
+" redefine a mapping learder
+let mapleader=","
+
 " Print the line number in front of each line.
-" set number
+set number
 
 " Show invisible characters
 " set list
@@ -148,6 +151,9 @@ abbreviate qlnick Isaiah Qian
 " python coding setting
 autocmd BufRead,BufNewFile *.py nmap <F5> :w<CR>:!python %<CR>
 
+" octave coding setting
+autocmd BufRead,BufNewFile *.m nmap <F5> :w<CR>:!octave %<CR>
+
 " java coding setting
 autocmd BufRead,BufNewFile *.java nmap <F5> :w<CR>:!javac %<CR>
 autocmd BufRead,BufNewFile *.java nmap <F6> :w<CR>:!java %<<CR>
@@ -167,3 +173,32 @@ autocmd BufRead,BufNewFile *.sh nmap <F5> :w<CR>:!bash %<CR>
 autocmd BufRead,BufNewFile *.tex nmap <F5> :w<CR>:!latex %<CR>
 autocmd BufRead,BufNewFile *.tex nmap <F6> :!dvipdf %<.dvi<CR>
 autocmd BufRead,BufNewFile *.tex nmap <S-F6> :!evince %<.pdf<CR>
+
+" Lush coding setting
+autocmd BufRead,BufNewFile *.lsh set filetype=lisp
+
+" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
+filetype plugin on
+
+" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+" can be called correctly.
+set shellslash
+
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+set grepprg=grep\ -nH\ $*
+
+" OPTIONAL: This enables automatic indentation as you type.
+filetype indent on
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode $*'
+let g:Tex_CompileRule_ps = 'ps2pdf $*'
+let g:Tex_CompileRule_pdf = 'pdflatex -interaction=nonstopmode $*'
+" let g:Tex_FormatDependency_pdf = 'dvi,ps,pdf'
+let g:Tex_MultipleCompileFormats='pdf, aux'
