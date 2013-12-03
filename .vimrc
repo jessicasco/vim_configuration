@@ -12,6 +12,7 @@ set nocompatible
 set backspace=indent,eol,start
 
 " vundle setting
+" BundleInstall
 " rebuilt by `./install.sh --clang-completer`
 filetype off
 
@@ -20,6 +21,10 @@ call vundle#rc()
 
 " let Vundle manage Vundle
 Bundle 'gmarik/vundle'
+"Bundle 'command-t'
+Bundle 'syntastic'
+Bundle 'Command-T'
+Bundle 'Solarized'
 
 " My Bundles here:
 "
@@ -30,6 +35,14 @@ filetype plugin indent on
 
 " pathogen setting
 execute pathogen#infect()
+
+" set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+"powerline{
+set guifont=PowerlineSymbols\ for\ Powerline
+set nocompatible
+set t_Co=256
+let g:Powerline_symbols = 'fancy'
+"}
 
 " Set color scheme that I like.
 " colorscheme evening
@@ -154,17 +167,28 @@ autocmd BufRead,BufNewFile *.py nmap <F5> :w<CR>:!python %<CR>
 " octave coding setting
 autocmd BufRead,BufNewFile *.m nmap <F5> :w<CR>:!octave %<CR>
 
+" retab 
+autocmd BufRead,BufNewFile *.c retab
+autocmd BufRead,BufNewFile *.cpp retab
+autocmd BufRead,BufNewFile *.h retab
+autocmd BufRead,BufNewFile *.java retab
+autocmd BufRead,BufNewFile *.py retab
+
 " java coding setting
 autocmd BufRead,BufNewFile *.java nmap <F5> :w<CR>:!javac %<CR>
-autocmd BufRead,BufNewFile *.java nmap <F6> :w<CR>:!java %<<CR>
+autocmd BufRead,BufNewFile *.java nmap <F6> :w<CR>:!time java %<<CR>
 
 " c coding setting
-autocmd BufRead,BufNewFile *.c nmap <F5> :w<CR>:!gcc -Wall -std=c99 -lm %<CR>
-autocmd BufRead,BufNewFile *.c nmap <F6> :w<CR>:!./a.out<CR>
+"autocmd BufRead,BufNewFile *.c nmap <F5> :w<CR>:!gcc -Wall -std=c99 -lm % -o %<<CR>
+autocmd BufRead,BufNewFile *.c nmap <F5> :w<CR>:!clang -Wall % -o %<<CR>
+autocmd BufRead,BufNewFile *.c nmap <F6> :w<CR>:!time ./%<<CR>
+autocmd BufNewFile  *.c	    0r ~/.vim/skeleton.c
 
 " cpp coding setting
-autocmd BufRead,BufNewFile *.cpp nmap <F5> :w<CR>:!g++ -Wall %<CR>
-autocmd BufRead,BufNewFile *.cpp nmap <F6> :w<CR>:!./a.out<CR>
+"autocmd BufRead,BufNewFile *.cpp nmap <F5> :w<CR>:!g++ -Wall % -o %<<CR>
+autocmd BufRead,BufNewFile *.cpp nmap <F5> :w<CR>:!clang++ -std=c++0x -Wall % -o %<<CR>
+autocmd BufRead,BufNewFile *.cpp nmap <F6> :w<CR>:!time ./%<<CR>
+autocmd BufNewFile  *.cpp	0r ~/.vim/skeleton.cpp
 
 " bash coding setting
 autocmd BufRead,BufNewFile *.sh nmap <F5> :w<CR>:!bash %<CR>
@@ -177,9 +201,6 @@ autocmd BufRead,BufNewFile *.tex nmap <S-F6> :!evince %<.pdf<CR>
 " Lush coding setting
 autocmd BufRead,BufNewFile *.lsh set filetype=lisp
 
-" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
-filetype plugin on
-
 " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
 " can be called correctly.
 set shellslash
@@ -188,9 +209,6 @@ set shellslash
 " search in a singe file. This will confuse Latex-Suite. Set your grep
 " program to always generate a file-name.
 set grepprg=grep\ -nH\ $*
-
-" OPTIONAL: This enables automatic indentation as you type.
-filetype indent on
 
 " OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
@@ -202,3 +220,12 @@ let g:Tex_CompileRule_ps = 'ps2pdf $*'
 let g:Tex_CompileRule_pdf = 'pdflatex -interaction=nonstopmode $*'
 " let g:Tex_FormatDependency_pdf = 'dvi,ps,pdf'
 let g:Tex_MultipleCompileFormats='pdf, aux'
+
+"YouCompleteMe
+let g:ycm_global_ycm_extra_conf = "/home/isaiah/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py"
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+
+"" Ultisnips
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsListSnippets="<c-k>"
